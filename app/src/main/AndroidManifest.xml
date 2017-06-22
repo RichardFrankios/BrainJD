@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="com.brain.jd"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <!-- 收件进入Splash界面 -->
+        <activity android:name="com.brain.jd.acitvity.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+
+        <activity android:name="com.brain.jd.acitvity.MainActivity">
+        </activity>
+        <activity android:name="com.brain.jd.acitvity.LoginActivity">
+        </activity>
+        <activity android:name="com.brain.jd.acitvity.RegisterActivity">
+        </activity>
+        <activity android:name="com.brain.jd.acitvity.ResetActivity">
+        </activity>
+
+
+
+    </application>
+
+</manifest>
