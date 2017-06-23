@@ -9,7 +9,7 @@ import com.brain.jd.R;
 import com.brain.jd.utils.ActivityUtils;
 
 
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends JDBaseActivity {
 
     private ImageView mIvLogo;
 

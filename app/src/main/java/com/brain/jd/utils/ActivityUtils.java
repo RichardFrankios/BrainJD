@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import com.brain.jd.acitvity.BaseActivity;
+import com.brain.jd.acitvity.JDBaseActivity;
 
 /**
  * Activity 工具类
@@ -20,7 +20,7 @@ public class ActivityUtils {
      * @param aty     要启动的Activity
      * @param isFinishSelf 是否结束自身
      */
-    public static void startActivity(Context ctx, Class<? extends BaseActivity> aty, boolean isFinishSelf) {
+    public static void startActivity(Context ctx, Class<? extends JDBaseActivity> aty, boolean isFinishSelf) {
         ctx.startActivity(new Intent(ctx, aty));
         if (isFinishSelf)
             ((Activity)ctx).finish();

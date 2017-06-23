@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.brain.jd.R;
-import com.brain.jd.constants.IdiyMessage;
+import com.brain.jd.consts.IdiyMessage;
 import com.brain.jd.controller.UserController;
 import com.brain.jd.domain.RResult;
 
@@ -18,7 +18,7 @@ import com.brain.jd.domain.RResult;
  * @date : 2017/6/22
  */
 
-public class ResetActivity extends BaseActivity {
+public class ResetActivity extends JDBaseActivity {
 
 
     private EditText mEtUsername;
@@ -60,7 +60,7 @@ public class ResetActivity extends BaseActivity {
 
     @Override
     public void initController() {
-        mController = new UserController();
+        mController = new UserController(this);
         mController.setIContrllerListenner(this);
     }
 

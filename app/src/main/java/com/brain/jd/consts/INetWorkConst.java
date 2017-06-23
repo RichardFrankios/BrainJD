@@ -1,4 +1,4 @@
-package com.brain.jd.constants;
+package com.brain.jd.consts;
 
 /**
  * 网络相关的常量
@@ -6,7 +6,7 @@ package com.brain.jd.constants;
  * @date : 2017/6/22
  */
 
-public interface INetWorkConstant {
+public interface INetWorkConst {
     /**
      * 服务器地址
      */

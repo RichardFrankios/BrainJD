@@ -1,4 +1,4 @@
-package com.brain.jd.constants;
+package com.brain.jd.consts;
 
 /**
  * 自定i消息
@@ -27,6 +27,14 @@ public interface IdiyMessage {
      */
     public static final int MSG_ACTION_RESET        = 5;
     public static final int MSG_ACTION_RESET_RESULT = 6;
+
+    public static final int MSG_ACTION_SAVE_DB        = 7;
+    public static final int MSG_ACTION_SAVE_DB_RESULT = 8;
+
+    public static final int MSG_ACTION_GET_DB        = 9;
+    public static final int MSG_ACTION_GET_DB_RESULT = 10;
+
+
 
 
 

@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.Window;
 import android.widget.Toast;
 
-import com.brain.jd.controller.BaseController;
+import com.brain.jd.controller.JDBaseController;
 import com.brain.jd.listenner.IContrllerListenner;
 
 /**
@@ -17,13 +17,13 @@ import com.brain.jd.listenner.IContrllerListenner;
  * @date : 2017/6/22
  */
 
-public abstract class BaseActivity extends FragmentActivity implements IContrllerListenner {
+public abstract class JDBaseActivity extends FragmentActivity implements IContrllerListenner {
 
 
     /**
      * 控制器对象
      */
-    protected BaseController mController;
+    protected JDBaseController mController;
 
     /**
      * 消息处理
@@ -32,7 +32,7 @@ public abstract class BaseActivity extends FragmentActivity implements IContrlle
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            BaseActivity.this.handleMessage(msg);
+            JDBaseActivity.this.handleMessage(msg);
         }
     };
 

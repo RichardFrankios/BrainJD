@@ -1,5 +1,7 @@
 package com.brain.jd.controller;
 
+import android.content.Context;
+
 import com.brain.jd.listenner.IContrllerListenner;
 
 /**
@@ -8,13 +10,19 @@ import com.brain.jd.listenner.IContrllerListenner;
  * @date : 2017/6/22
  */
 
-public abstract class BaseController {
+public abstract class JDBaseController {
 
 
     /**
      * 控制器监听类
      */
     protected IContrllerListenner mIContrllerListenner;
+
+    protected Context mContext;
+
+    public JDBaseController(Context context) {
+        mContext = context;
+    }
 
     /**
      * 设置监听器

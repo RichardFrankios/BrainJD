@@ -11,7 +11,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.brain.jd.R;
-import com.brain.jd.constants.IdiyMessage;
+import com.brain.jd.consts.IdiyMessage;
 import com.brain.jd.controller.UserController;
 import com.brain.jd.domain.RResult;
 
@@ -20,7 +20,7 @@ import com.brain.jd.domain.RResult;
  * @date : 2017/6/22
  */
 
-public class RegisterActivity extends BaseActivity {
+public class RegisterActivity extends JDBaseActivity {
 
 
     private static final String TAG = "RegisterActivity";
@@ -96,7 +96,7 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     public void initController() {
-        mController = new UserController();
+        mController = new UserController(this);
         mController.setIContrllerListenner(this);
     }
 
