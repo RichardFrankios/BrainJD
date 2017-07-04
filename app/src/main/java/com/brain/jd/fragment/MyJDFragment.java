@@ -1,7 +1,10 @@
 package com.brain.jd.fragment;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,7 @@ import com.brain.jd.R;
 import com.brain.jd.consts.INetWorkConst;
 import com.brain.jd.domain.RLoginResult;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
 /**
  * 主页Fragment
@@ -61,8 +65,16 @@ public class MyJDFragment extends JDBaseFragment{
 
             Glide.with(this)
                     .load(INetWorkConst.BASE_URL + rLoginResult.userIcon)
-                    .placeholder(R.drawable.icon_user)
-                    .into(mIvIcon);
+                    .asBitmap()                          // 注意必须使用这个, BitmapImageViewTarget才可以使用
+                    .placeholder(R.drawable.home_jd)
+                    .into(new BitmapImageViewTarget(mIvIcon){// 设置圆形图片
+                        @Override
+                        protected void setResource(Bitmap resource) {
+                            RoundedBitmapDrawable rbd = RoundedBitmapDrawableFactory.create(getResources(), resource);
+                            rbd.setCircular(true);
+                            mIvIcon.setImageDrawable(rbd);
+                        }
+                    });
         }
     }
 

@@ -35,6 +35,11 @@ public interface IdiyMessage {
     public static final int MSG_ACTION_GET_DB_RESULT = 10;
 
 
+    /**
+     * Banner
+     */
+    public static final int MSG_ACTION_BANNER        = 11;
+    public static final int MSG_ACTION_BANNER_RESULT = 12;
 
 
 

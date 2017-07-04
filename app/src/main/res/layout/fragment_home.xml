@@ -63,9 +63,9 @@
             <RelativeLayout
                 android:id="@+id/ad_rl"
                 android:layout_width="match_parent"
-                android:layout_height="175dp"
-                android:visibility="gone" >
-
+                android:visibility="gone"
+                android:layout_height="175dp" >
+                <!-- ViewPager 广告轮播器 -->
                 <android.support.v4.view.ViewPager
                     android:id="@+id/ad_vp"
                     android:layout_width="match_parent"
@@ -82,62 +82,19 @@
                     android:orientation="horizontal" />
             </RelativeLayout>
 
-            <!--<include layout="@layout/home_child_module" />-->
+            <!-- 分类模块 -->
+            <include layout="@layout/home_child_module" />
 
-            <!-- 秒杀 -->
-			<!--
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center_vertical" >
-
-                <ImageView
-                    android:id="@+id/clock"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
-                    android:src="@drawable/clock" />
-
-                <TextView
-                    android:id="@+id/seckill_tip_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="2dp"
-                    android:layout_toRightOf="@id/clock"
-                    android:text="掌上秒杀"
-                    android:textColor="#F00"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/seckill_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@id/seckill_tip_tv"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@id/seckill_tip_tv"
-                    android:textColor="@color/jd_welcome_bg"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
-                    android:text="更多秒杀 >"
-                    android:textColor="#9B9B9B"
-                    android:textSize="12sp" />
-            </RelativeLayout>
-
-            <com.m520it.jdmall.ui.HorizontalListView
+            <!-- 秒杀头部 -->
+            <include layout="@layout/home_second_kill_header"/>
+            <!-- 掌上秒杀, 内容 -->
+            <com.brain.jd.ui.HorizontalListView
                 android:id="@+id/horizon_listview"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
                 android:background="@android:color/white" />
+
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -156,7 +113,6 @@
                 android:listSelector="@android:color/transparent"
                 android:numColumns="2"
                 android:scrollbars="none" />
-            -->
         </LinearLayout>
     </com.brain.jd.ui.FlexiScrollView>
 

@@ -24,4 +24,8 @@ public interface INetWorkConst {
      * 重置密码
      */
     public static final String RESET_URL = BASE_URL + "/reset";
+    /**
+     * banner url
+     */
+    public static final String BANNER_URL = BASE_URL + "/banner";
 }
