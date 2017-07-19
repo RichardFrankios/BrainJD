@@ -15,10 +15,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.brain.jd.R;
+import com.brain.jd.adapter.SecondKillAdapter;
 import com.brain.jd.consts.INetWorkConst;
 import com.brain.jd.consts.IdiyMessage;
 import com.brain.jd.controller.HomeController;
 import com.brain.jd.domain.BannerBean;
+import com.brain.jd.domain.RSecondKillBean;
 import com.brain.jd.ui.HorizontalListView;
 import com.bumptech.glide.Glide;
 
@@ -54,6 +56,7 @@ public class HomeFragment extends JDBaseFragment{
     // TopBannerAdapter
     private TopBannerAdAdapter mTopBannerAdAdpater;
     private Timer mTimer;
+    private SecondKillAdapter mSecondKillAdapter;
 
     @Nullable
     @Override
@@ -84,6 +87,8 @@ public class HomeFragment extends JDBaseFragment{
     private void initData() {
         // 1. 获取广告数据
         mController.sendAsyncMessage(IdiyMessage.MSG_ACTION_BANNER,1);
+        // 2. 获取SecondKill
+        mController.sendAsyncMessage(IdiyMessage.MSG_ACTION_SECOND_KILL,0);
     }
 
     @Override
@@ -94,6 +99,18 @@ public class HomeFragment extends JDBaseFragment{
 
     @Override
     public void initUI() {
+        initTopAd();
+
+        initSecondKill();
+    }
+
+    private void initSecondKill() {
+        mSecondKillAdapter = new SecondKillAdapter(getActivity());
+        mHlvSecondKill.setAdapter(mSecondKillAdapter);
+    }
+
+    private void initTopAd() {
+        // 设置顶部轮播器
         mTopBannerAdAdpater = new TopBannerAdAdapter();
         mVpAd.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -129,7 +146,19 @@ public class HomeFragment extends JDBaseFragment{
             case IdiyMessage.MSG_ACTION_BANNER_RESULT:
                 handleBannerResult(msg.obj);
                 break;
+            case IdiyMessage.MSG_ACTION_SECOND_KILL_RESULT:
+                handleSecondKillResult((List<RSecondKillBean>) msg.obj);
+                break;
+
         }
+    }
+
+    /**
+     * Deal second kill data
+     */
+    private void handleSecondKillResult(List<RSecondKillBean> obj) {
+        mSecondKillAdapter.setDatas(obj);
+        mSecondKillAdapter.notifyDataSetChanged();
     }
 
     /**

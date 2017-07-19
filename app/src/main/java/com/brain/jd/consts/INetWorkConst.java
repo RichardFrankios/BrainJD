@@ -28,4 +28,8 @@ public interface INetWorkConst {
      * banner url
      */
     public static final String BANNER_URL = BASE_URL + "/banner";
+    /**
+     * Second kill
+     */
+    public static final String SECOND_KILL_URL = BASE_URL + "/seckill";
 }

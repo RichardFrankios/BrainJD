@@ -41,6 +41,14 @@ public interface IdiyMessage {
     public static final int MSG_ACTION_BANNER        = 11;
     public static final int MSG_ACTION_BANNER_RESULT = 12;
 
+    /**
+     * Second Kill
+     */
+    public static final int MSG_ACTION_SECOND_KILL        = 13;
+    public static final int MSG_ACTION_SECOND_KILL_RESULT = 14;
+
+
+
 
 
 
