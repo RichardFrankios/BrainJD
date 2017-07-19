@@ -57,5 +57,15 @@ public interface IdiyMessage {
 
 
 
+    /**
+     * Top Category
+     */
+    public static final int MSG_ACTION_TOP_CATEGORY        = 17;
+    public static final int MSG_ACTION_TOP_CATEGORY_RESULT = 18;
+
+
+
+
+
 
 }

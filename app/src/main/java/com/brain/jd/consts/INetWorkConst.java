@@ -36,4 +36,8 @@ public interface INetWorkConst {
      * get you fav
      */
     public static final String SECOND_RECOMMEND_URL = BASE_URL + "/getYourFav";
+    /**
+     * get top category
+     */
+    public static final String TOP_CATEGORY_URL = BASE_URL + "/category";
 }
