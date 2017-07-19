@@ -2,6 +2,7 @@ package com.brain.jd.fragment;
 
 import android.os.Bundle;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.brain.jd.R;
@@ -20,8 +22,13 @@ import com.brain.jd.domain.BannerBean;
 import com.brain.jd.ui.HorizontalListView;
 import com.bumptech.glide.Glide;
 
+import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * 主页Fragment
@@ -32,21 +39,29 @@ import java.util.List;
 public class HomeFragment extends JDBaseFragment{
 
     private static final String TAG = "HomeFragment";
+
+    @ViewInject(R.id.horizon_listview)
     private HorizontalListView mHlvSecondKill;
+
+    @ViewInject(R.id.ad_vp)
     private ViewPager mVpAd;
+
+    @ViewInject(R.id.ad_rl)
     private RelativeLayout mRlAd;
 
-    /**
-     * banner 数据集合
-     */
-//    private List<BannerBean> mBannerBeens = new ArrayList<>();
-    private AdAdapter mAdAdpater;
+    @ViewInject(R.id.ad_indicator)
+    private LinearLayout mAdIndicators;
+    // TopBannerAdapter
+    private TopBannerAdAdapter mTopBannerAdAdpater;
+    private Timer mTimer;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView: ");
-        return View.inflate(getActivity(), R.layout.fragment_home, null);
+        View view = View.inflate(getActivity(), R.layout.fragment_home, null);
+        // 依赖注入
+        x.view().inject(this, view);
+        return view;
     }
 
     /**
@@ -57,6 +72,7 @@ public class HomeFragment extends JDBaseFragment{
         super.onActivityCreated(savedInstanceState);
 
         initUI();
+
         initController();
 
         initData();
@@ -78,13 +94,28 @@ public class HomeFragment extends JDBaseFragment{
 
     @Override
     public void initUI() {
-        mHlvSecondKill = (HorizontalListView) getActivity().findViewById(R.id.horizon_listview);
+        mTopBannerAdAdpater = new TopBannerAdAdapter();
+        mVpAd.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        mRlAd = (RelativeLayout) getActivity().findViewById(R.id.ad_rl);
-        mVpAd = (ViewPager) getActivity().findViewById(R.id.ad_vp);
-        mAdAdpater = new AdAdapter();
-//        mAdAdpater.setDatas(mBannerBeens);
+            }
 
+            @Override
+            public void onPageSelected(int position) {
+                Log.d(TAG, "onPageSelected: ----------");
+                Log.d(TAG, "onPageSelected: " + position);
+
+                for (int i = 0; i < mAdIndicators.getChildCount(); i ++) {
+                    mAdIndicators.getChildAt(i).setEnabled(position == i);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -106,17 +137,18 @@ public class HomeFragment extends JDBaseFragment{
      */
     private void handleBannerResult(Object obj) {
         mRlAd.setVisibility(View.VISIBLE);
-        mAdAdpater.setDatas((List<BannerBean>) obj);
-        mAdAdpater.notifyDataSetChanged();
-        mVpAd.setAdapter(mAdAdpater);
+        mTopBannerAdAdpater.setDatas((List<BannerBean>) obj);
+        mTopBannerAdAdpater.notifyDataSetChanged();
+        mVpAd.setAdapter(mTopBannerAdAdpater);
     }
 
     /**
-     * 广告轮播适配器
+     * Banner Adapter
      */
-    class AdAdapter extends PagerAdapter {
+    class TopBannerAdAdapter extends PagerAdapter {
 
         private List<BannerBean> mDatas = new ArrayList<>();
+        private List<ImageView> mImageViews = new ArrayList<>();
 
         @Override
         public int getCount() {
@@ -130,17 +162,7 @@ public class HomeFragment extends JDBaseFragment{
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            Log.d(TAG, "instantiateItem: =======");
-            BannerBean bannerBean = mDatas.get(position);
-
-            ImageView imageView = new ImageView(getActivity());
-            imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT));
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            // 加载图片
-            Glide.with(HomeFragment.this)
-                    .load(INetWorkConst.BASE_URL + bannerBean.getAdUrl());
-
+            ImageView imageView = mImageViews.get(position);
             container.addView(imageView);
             return imageView;
         }
@@ -150,16 +172,78 @@ public class HomeFragment extends JDBaseFragment{
             container.removeView((View) object);
         }
 
+        /**
+         * 设置数据
+         */
         public void setDatas(List<BannerBean> bannerBeens) {
+            // 使用SmartView
             mDatas = bannerBeens;
-            Log.d(TAG, "handleBannerResult: " + mDatas);
+            // 初始化所有的布局
+            for (int i = 0; i < bannerBeens.size(); i ++) {
+                // 创建View
+                mImageViews.add(createOneBanner(i));
+                // 创建指示器
+                mAdIndicators.addView(createOneIndicator(i));
+            }
+
+            // 初始化定时器.
+            if (mTimer == null) {
+                mTimer = new Timer();
+                mTimer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                scrollBanners();
+                            }
+                        });
+                    }
+                },0, 3000);
+            }
+
+        }
+
+        /**
+         * 创建一个Banner页面
+         */
+        @NonNull
+        private ImageView createOneBanner(int index) {
+            BannerBean bannerBean = mDatas.get(index);
+            ImageView imageView = new ImageView(getActivity());
+            imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT));
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            // 加载图片
+            Glide.with(HomeFragment.this)
+                    .load(INetWorkConst.BASE_URL + bannerBean.getAdUrl())
+                    .into(imageView);
+            return imageView;
+        }
+
+        /**
+         * 创建一个指示器
+         */
+        private View createOneIndicator(int index) {
+            View view = new View(getActivity());
+            view.setBackgroundResource(R.drawable.ad_indicator_bg);
+            // 基于 720*1280 开发, 除以 2
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(15, 15);
+            layoutParams.setMargins(10, 0, 0, 0);
+            view.setLayoutParams(layoutParams);
+            view.setEnabled(index == 0);
+            return view;
         }
     }
 
-
-
-
-
+    /**
+     * 切换Banner
+     */
+    private void scrollBanners() {
+        int currentItem = mVpAd.getCurrentItem();
+        currentItem = (currentItem == mTopBannerAdAdpater.getCount()-1)? 0 : currentItem + 1 ;
+        mVpAd.setCurrentItem(currentItem);
+    }
 
 
 }
