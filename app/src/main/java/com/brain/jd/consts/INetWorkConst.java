@@ -32,4 +32,8 @@ public interface INetWorkConst {
      * Second kill
      */
     public static final String SECOND_KILL_URL = BASE_URL + "/seckill";
+    /**
+     * get you fav
+     */
+    public static final String SECOND_RECOMMEND_URL = BASE_URL + "/getYourFav";
 }

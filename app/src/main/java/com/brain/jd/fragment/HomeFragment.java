@@ -6,22 +6,25 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.brain.jd.R;
+import com.brain.jd.adapter.RecommendAdapter;
 import com.brain.jd.adapter.SecondKillAdapter;
 import com.brain.jd.consts.INetWorkConst;
 import com.brain.jd.consts.IdiyMessage;
 import com.brain.jd.controller.HomeController;
 import com.brain.jd.domain.BannerBean;
+import com.brain.jd.domain.RRecommendBean;
 import com.brain.jd.domain.RSecondKillBean;
 import com.brain.jd.ui.HorizontalListView;
+import com.brain.jd.utils.FixedViewUtil;
 import com.bumptech.glide.Glide;
 
 import org.xutils.view.annotation.ViewInject;
@@ -53,10 +56,17 @@ public class HomeFragment extends JDBaseFragment{
 
     @ViewInject(R.id.ad_indicator)
     private LinearLayout mAdIndicators;
+
+    @ViewInject(R.id.recommend_gv)
+    private GridView mRecommendGv;
+
+
+
+    private Timer mTimer;
     // TopBannerAdapter
     private TopBannerAdAdapter mTopBannerAdAdpater;
-    private Timer mTimer;
     private SecondKillAdapter mSecondKillAdapter;
+    private RecommendAdapter mRecommendAdapter;
 
     @Nullable
     @Override
@@ -89,6 +99,8 @@ public class HomeFragment extends JDBaseFragment{
         mController.sendAsyncMessage(IdiyMessage.MSG_ACTION_BANNER,1);
         // 2. 获取SecondKill
         mController.sendAsyncMessage(IdiyMessage.MSG_ACTION_SECOND_KILL,0);
+        // 3. 获取recommend
+        mController.sendAsyncMessage(IdiyMessage.MSG_ACTION_RECOMMEND,0);
     }
 
     @Override
@@ -102,6 +114,14 @@ public class HomeFragment extends JDBaseFragment{
         initTopAd();
 
         initSecondKill();
+
+        initRecommend();
+
+    }
+
+    private void initRecommend() {
+        mRecommendAdapter = new RecommendAdapter(getActivity());
+        mRecommendGv.setAdapter(mRecommendAdapter);
     }
 
     private void initSecondKill() {
@@ -120,8 +140,6 @@ public class HomeFragment extends JDBaseFragment{
 
             @Override
             public void onPageSelected(int position) {
-                Log.d(TAG, "onPageSelected: ----------");
-                Log.d(TAG, "onPageSelected: " + position);
 
                 for (int i = 0; i < mAdIndicators.getChildCount(); i ++) {
                     mAdIndicators.getChildAt(i).setEnabled(position == i);
@@ -150,7 +168,24 @@ public class HomeFragment extends JDBaseFragment{
                 handleSecondKillResult((List<RSecondKillBean>) msg.obj);
                 break;
 
+            case IdiyMessage.MSG_ACTION_RECOMMEND_RESULT:
+                handleRecommendResult((List<RRecommendBean>) msg.obj);
+                break;
+
+
+
+
         }
+    }
+
+    /**
+     * 处理 get you fav
+     */
+    private void handleRecommendResult(List<RRecommendBean> obj) {
+        mRecommendAdapter.setDatas(obj);
+        mRecommendAdapter.notifyDataSetChanged();
+
+        FixedViewUtil.setGridViewHeightBasedOnChildren(mRecommendGv, 2);
     }
 
     /**

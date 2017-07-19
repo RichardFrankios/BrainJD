@@ -47,6 +47,12 @@ public interface IdiyMessage {
     public static final int MSG_ACTION_SECOND_KILL        = 13;
     public static final int MSG_ACTION_SECOND_KILL_RESULT = 14;
 
+    /**
+     * RECOMMEND
+     */
+    public static final int MSG_ACTION_RECOMMEND        = 15;
+    public static final int MSG_ACTION_RECOMMEND_RESULT = 16;
+
 
 
 

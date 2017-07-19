@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.brain.jd.consts.INetWorkConst;
 import com.brain.jd.consts.IdiyMessage;
 import com.brain.jd.domain.BannerBean;
+import com.brain.jd.domain.RRecommendBean;
 import com.brain.jd.domain.RResult;
 import com.brain.jd.domain.RSecondKillBean;
 import com.brain.jd.utils.NetWorkUtil;
@@ -41,6 +42,35 @@ public class HomeController extends JDBaseController {
                 loadSecondKill();
                 break;
 
+            case IdiyMessage.MSG_ACTION_RECOMMEND:
+                loadRecommend();
+                break;
+
+
+
+        }
+    }
+
+    /**
+     * 加载推荐商品
+     */
+    private void loadRecommend() {
+        String json = NetWorkUtil.doGet(INetWorkConst.SECOND_RECOMMEND_URL);
+        RResult rResult = JSON.parseObject(json, RResult.class);
+        List<RRecommendBean> rRecommendBeen = new ArrayList<>();
+
+        if (rResult.isSuccess()) {
+            try {
+                JSONObject jsonObject = new JSONObject(rResult.result);
+                String rows = jsonObject.optString("rows");
+                rRecommendBeen = JSON.parseArray(rows, RRecommendBean.class);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (mIContrllerListenner != null) {
+            mIContrllerListenner.onMessageResult(IdiyMessage.MSG_ACTION_RECOMMEND_RESULT, rRecommendBeen);
         }
     }
 
