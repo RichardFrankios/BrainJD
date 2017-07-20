@@ -120,5 +120,7 @@ public class CategoryFragment extends JDBaseFragment{
         // top category
         mTopCategoryAdapter.setDatas((List<RTopCategoryBean>) obj);
         mTopCategoryAdapter.notifyDataSetChanged();
+        // 默认点击第一个
+        mLvTopCategory.performItemClick(null, 0, 0);
     }
 }

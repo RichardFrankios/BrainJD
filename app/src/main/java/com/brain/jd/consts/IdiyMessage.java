@@ -63,6 +63,14 @@ public interface IdiyMessage {
     public static final int MSG_ACTION_TOP_CATEGORY        = 17;
     public static final int MSG_ACTION_TOP_CATEGORY_RESULT = 18;
 
+    /**
+     * Second Category
+     */
+    public static final int MSG_ACTION_SECOND_CATEGORY        = 19;
+    public static final int MSG_ACTION_SECOND_CATEGORY_RESULT = 20;
+
+
+
 
 
 
