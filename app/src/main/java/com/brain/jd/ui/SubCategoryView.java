@@ -1,7 +1,6 @@
 package com.brain.jd.ui;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -29,6 +28,7 @@ import com.bumptech.glide.Glide;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,6 +46,8 @@ public class SubCategoryView extends FlexiScrollView implements IViewContainer, 
 
     private CategoryController mController;
 
+    private List<List<RThirdSubBean>> mThirdCategory = new ArrayList<>();
+
     private Handler mHandler = new Handler(Looper.getMainLooper()){
         @Override
         public void handleMessage(Message msg) {
@@ -60,41 +62,52 @@ public class SubCategoryView extends FlexiScrollView implements IViewContainer, 
 
     private void handleSecondCategory(List<RSecondSubBean> secondSubBeans) {
         int size = secondSubBeans.size();
+        mThirdCategory = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             RSecondSubBean rSecondSubBean = secondSubBeans.get(i);
             // add second
             View scView = View.inflate(getContext(), R.layout.view_item_category, null);
-            TextView textView = (TextView) scView.findViewById(R.id.tv_second_title);
-            textView.setText(rSecondSubBean.getName());
+//            View scView = View.inflate(getContext(), R.layout.view_item_icon_name, null);
+            TextView secondTitle = (TextView) scView.findViewById(R.id.tv_second_title);
+            secondTitle.setText(rSecondSubBean.getName());
+
+            mLlChildContainer.addView(scView);
+            scView.requestLayout();
+
 
             AutoBreakViewGroup abvg = (AutoBreakViewGroup) scView.findViewById(R.id.abvg_category);
 
-            TextView textView1 = new TextView(getContext());
-            textView.setBackgroundColor(Color.BLACK);
-            abvg.addView(textView1);
+
+            abvg.setOnItemClickListener(new AutoBreakViewGroup.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position, int parentId) {
+                    Log.d(TAG, "onItemClick: " + mThirdCategory.get(parentId).get(position).getName());
+
+                }
+            });
             
-            // 三级数据
+//            // 三级数据
             List<RThirdSubBean> rThirdSubBeen = JSON.parseArray(rSecondSubBean.getThirdCategory(), RThirdSubBean.class);
+            mThirdCategory.add(rThirdSubBeen);
+
             for (int j = 0; j < rThirdSubBeen.size(); j++) {
+                Log.d(TAG, "handleSecondCategory: " + j);
 
-//                RThirdSubBean rThirdSubBean = rThirdSubBeen.get(j);
-//                View viewItem = View.inflate(getContext(), R.layout.view_item_icon_name, null);
-//                TextView tvName = (TextView) viewItem.findViewById(R.id.tv_name);
-//                ImageView ivIcon = (ImageView) viewItem.findViewById(R.id.iv_icon);
-//
-//                tvName.setText(rThirdSubBean.getName());
-//
-//                Glide.with(getContext())
-//                        .load(rThirdSubBean.getBannerUrl())
-//                        .into(ivIcon);
-//                TextView textView1 = new TextView(getContext());
-//                textView.setBackgroundColor(Color.BLACK);
-//                abvg.addView(textView1);
+                RThirdSubBean rThirdSubBean = rThirdSubBeen.get(j);
+                View viewItem = View.inflate(getContext(), R.layout.view_item_icon_name, null);
+                TextView tvName = (TextView) viewItem.findViewById(R.id.tv_name);
+                ImageView ivIcon = (ImageView) viewItem.findViewById(R.id.iv_icon);
+
+                tvName.setText(rThirdSubBean.getName());
+                Glide.with(getContext())
+                        .load(INetWorkConst.BASE_URL + rThirdSubBean.getBannerUrl())
+                        .into(ivIcon);
+
+                abvg.setCurrentId(i);
+
+                abvg.addView(viewItem);
             }
-            mLlChildContainer.addView(scView);
         }
-        Log.d(TAG, "handleSecondCategory: ");
-
     }
 
 

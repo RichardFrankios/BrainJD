@@ -6,13 +6,17 @@
               android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/iv_icon"
-        android:layout_width="118dp"
-        android:layout_height="118dp"/>
+        android:src="@drawable/icon2"
+        android:scaleType="fitXY"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp"/>
     <TextView
         android:id="@+id/tv_name"
+        android:gravity="center_horizontal"
         android:text="Mingcehn"
         android:textColor="@android:color/black"
         android:textSize="18sp"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </LinearLayout>

@@ -4,7 +4,6 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <TextView
-        android:background="#0f0"
         android:text="title"
         android:paddingTop="8dp"
         android:paddingLeft="8dp"
@@ -18,9 +17,8 @@
 
     <com.brain.jd.view.AutoBreakViewGroup
         android:id="@+id/abvg_category"
-        android:background="#f00"
         android:layout_width="match_parent"
-        android:layout_height="300dp">
+        android:layout_height="wrap_content">
 
     </com.brain.jd.view.AutoBreakViewGroup>
 
