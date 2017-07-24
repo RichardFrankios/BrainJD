@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.brain.jd.ui.FlexiScrollView
+<com.brain.jd.ui.FlexScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -348,4 +348,4 @@
             android:textSize="20sp" />
     </LinearLayout>
 
-</com.brain.jd.ui.FlexiScrollView>
+</com.brain.jd.ui.FlexScrollView>

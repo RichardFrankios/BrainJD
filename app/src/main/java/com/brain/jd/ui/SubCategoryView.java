@@ -1,6 +1,7 @@
 package com.brain.jd.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.brain.jd.R;
+import com.brain.jd.acitvity.ProductListActivity;
 import com.brain.jd.consts.INetWorkConst;
 import com.brain.jd.consts.IdiyMessage;
 import com.brain.jd.controller.CategoryController;
@@ -37,9 +39,14 @@ import java.util.List;
  * @date : 2017/7/19
  */
 
-public class SubCategoryView extends FlexiScrollView implements IViewContainer, IContrllerListenner{
+public class SubCategoryView extends FlexScrollView implements IViewContainer, IContrllerListenner{
 
     private static final String TAG = "SubCategoryView";
+
+    /**
+     * intent extra data flag
+     */
+    public static final String INTENT_EXTRA_DATA_CATEGORY_ID = "category_id";
 
     @ViewInject(R.id.child_container_ll)
     private LinearLayout mLlChildContainer;
@@ -77,11 +84,16 @@ public class SubCategoryView extends FlexiScrollView implements IViewContainer, 
 
             AutoBreakViewGroup abvg = (AutoBreakViewGroup) scView.findViewById(R.id.abvg_category);
 
-
+            // 添加点击事件
             abvg.setOnItemClickListener(new AutoBreakViewGroup.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position, int parentId) {
                     Log.d(TAG, "onItemClick: " + mThirdCategory.get(parentId).get(position).getName());
+
+
+                    Intent intent = new Intent(getContext(), ProductListActivity.class);
+                    intent.putExtra(INTENT_EXTRA_DATA_CATEGORY_ID, mRTopCategoryBean.getId());
+                    getContext().startActivity(intent);
 
                 }
             });

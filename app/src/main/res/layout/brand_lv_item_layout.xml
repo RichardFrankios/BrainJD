@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:descendantFocusability="blocksDescendants"
+              android:orientation="vertical">
+    <!--
+        子控件有 Button, CheckBox时使用
+        android:descendantFocusability="blocksDescendants"
+
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:clickable="false"
+    -->
+
+    <Button
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:clickable="false"
+        android:id="@+id/brand_btn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/pay_money_choose_bg"
+        android:ellipsize="end"
+        android:lines="1"
+        android:padding="5dp"
+        android:textColor="@drawable/choose_productlist_service_txtbg"
+        android:textSize="14sp"/>
+
+</LinearLayout>

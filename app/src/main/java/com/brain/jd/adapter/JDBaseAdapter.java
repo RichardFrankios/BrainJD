@@ -16,6 +16,12 @@ public abstract class JDBaseAdapter<T> extends BaseAdapter {
     protected List<T> mData = new ArrayList<>();
     protected final Context mContext;
 
+    protected int mCurrentSelect  = -1;
+
+    public void setCurrentSelect(int currentSelect) {
+        mCurrentSelect = currentSelect;
+    }
+
 
     public JDBaseAdapter(Context ctx) {
         mContext = ctx;

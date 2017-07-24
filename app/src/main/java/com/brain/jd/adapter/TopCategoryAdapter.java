@@ -19,15 +19,13 @@ import org.xutils.x;
 public class TopCategoryAdapter extends JDBaseAdapter<RTopCategoryBean> {
 
 
-    private int mCurrentSelect  = -1;
+
 
     public TopCategoryAdapter(Context ctx) {
         super(ctx);
     }
 
-    public void setCurrentSelect(int currentSelect) {
-        mCurrentSelect = currentSelect;
-    }
+
 
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;

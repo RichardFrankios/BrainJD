@@ -45,7 +45,7 @@
 
     <!-- 弹性滑动滑动界面 -->
 
-    <com.brain.jd.ui.FlexiScrollView
+    <com.brain.jd.ui.FlexScrollView
         android:id="@+id/scrollbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -114,6 +114,6 @@
                 android:numColumns="2"
                 android:scrollbars="none" />
         </LinearLayout>
-    </com.brain.jd.ui.FlexiScrollView>
+    </com.brain.jd.ui.FlexScrollView>
 
 </LinearLayout>

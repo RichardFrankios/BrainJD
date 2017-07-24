@@ -40,4 +40,8 @@ public interface INetWorkConst {
      * get top category
      */
     public static final String TOP_CATEGORY_URL = BASE_URL + "/category";
+    /**
+     * brand category url
+     */
+    public static final String BRAND_CATEGORY_URL = BASE_URL + "/brand";
 }

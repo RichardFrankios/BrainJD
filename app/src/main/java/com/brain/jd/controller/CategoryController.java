@@ -6,6 +6,7 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.brain.jd.consts.INetWorkConst;
 import com.brain.jd.consts.IdiyMessage;
+import com.brain.jd.domain.RBrand;
 import com.brain.jd.domain.RResult;
 import com.brain.jd.domain.RSecondSubBean;
 import com.brain.jd.domain.RTopCategoryBean;
@@ -40,6 +41,29 @@ public class CategoryController extends JDBaseController {
                 loadSecondCategory((double) pValues[0]);
                 break;
 
+            case IdiyMessage.MSG_ACTION_BRAND_CATEGORY:
+                loadBrandCategory((Double) pValues[0]);
+                break;
+
+
+
+        }
+    }
+
+    /**
+     * loadBrandCategory
+     */
+    private void loadBrandCategory(double id) {
+        String json = NetWorkUtil.doGet(INetWorkConst.BRAND_CATEGORY_URL + "?categoryid=" + (int)id);
+        RResult rResult = JSON.parseObject(json, RResult.class);
+        List<RBrand> rBrands = new ArrayList<>();
+
+        if (rResult.isSuccess()) {
+            rBrands = JSON.parseArray(rResult.getResult(), RBrand.class);
+        }
+
+        if (mIContrllerListenner != null) {
+            mIContrllerListenner.onMessageResult(IdiyMessage.MSG_ACTION_BRAND_CATEGORY_RESULT, rBrands);
         }
     }
 

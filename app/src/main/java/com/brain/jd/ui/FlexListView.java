@@ -3,28 +3,28 @@ package com.brain.jd.ui;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.widget.ScrollView;
+import android.widget.ListView;
 
-public class FlexiScrollView extends ScrollView{
+public class FlexListView extends ListView{
     //初始可拉动Y轴方向距离
     private static final int MAX_Y_OVERSCROLL_DISTANCE = 100;
     private Context mContext;
     //实际可上下拉动Y轴上的距离
     private int mMaxYOverscrollDistance;
-      
-    public FlexiScrollView(Context context){  
-        super(context);  
-        mContext = context;  
-        initBounceListView();  
-    }  
-      
-    public FlexiScrollView(Context context, AttributeSet attrs) {  
-        super(context, attrs);  
-        mContext = context;  
-        initBounceListView();  
-    }  
-      
-    public FlexiScrollView(Context context, AttributeSet attrs, int defStyle) {  
+
+    public FlexListView(Context context){
+        super(context);
+        mContext = context;
+        initBounceListView();
+    }
+
+    public FlexListView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        mContext = context;
+        initBounceListView();
+    }
+
+    public FlexListView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);  
         mContext = context;  
         initBounceListView();  

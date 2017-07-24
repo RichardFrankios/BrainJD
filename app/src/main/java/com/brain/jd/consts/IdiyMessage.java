@@ -70,6 +70,15 @@ public interface IdiyMessage {
     public static final int MSG_ACTION_SECOND_CATEGORY_RESULT = 20;
 
 
+    /**
+     * Brand Category
+     */
+    public static final int MSG_ACTION_BRAND_CATEGORY        = 21;
+    public static final int MSG_ACTION_BRAND_CATEGORY_RESULT = 22;
+
+
+
+
 
 
 
