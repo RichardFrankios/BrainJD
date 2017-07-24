@@ -7,9 +7,11 @@ import com.alibaba.fastjson.JSON;
 import com.brain.jd.consts.INetWorkConst;
 import com.brain.jd.consts.IdiyMessage;
 import com.brain.jd.domain.RBrand;
+import com.brain.jd.domain.RProductListBean;
 import com.brain.jd.domain.RResult;
 import com.brain.jd.domain.RSecondSubBean;
 import com.brain.jd.domain.RTopCategoryBean;
+import com.brain.jd.domain.SProductListParam;
 import com.brain.jd.utils.NetWorkUtil;
 
 import java.util.ArrayList;
@@ -45,8 +47,30 @@ public class CategoryController extends JDBaseController {
                 loadBrandCategory((Double) pValues[0]);
                 break;
 
+            case IdiyMessage.MSG_ACTION_SEARCH_PRODUCT:
+                loadProductList((SProductListParam) pValues[0]);
+                break;
 
 
+
+
+
+        }
+    }
+
+    private void loadProductList(SProductListParam param) {
+
+        String productStr = NetWorkUtil.doPost(INetWorkConst.SEARCH_PRODUCT_URL, param.getHashMapValue());
+        Log.d(TAG, "loadProductList: " + productStr);
+
+        RResult rResult = JSON.parseObject(productStr, RResult.class);
+        RProductListBean rProductListBean = null;
+        if (rResult.isSuccess()) {
+            rProductListBean = JSON.parseObject(rResult.getResult(), RProductListBean.class);
+
+        }
+        if (mIContrllerListenner != null) {
+            mIContrllerListenner.onMessageResult(IdiyMessage.MSG_ACTION_SEARCH_PRODUCT_RESULT, rProductListBean );
         }
     }
 
@@ -54,7 +78,7 @@ public class CategoryController extends JDBaseController {
      * loadBrandCategory
      */
     private void loadBrandCategory(double id) {
-        String json = NetWorkUtil.doGet(INetWorkConst.BRAND_CATEGORY_URL + "?categoryid=" + (int)id);
+        String json = NetWorkUtil.doGet(INetWorkConst.BRAND_CATEGORY_URL + "?categoryId=" + (int)id);
         RResult rResult = JSON.parseObject(json, RResult.class);
         List<RBrand> rBrands = new ArrayList<>();
 

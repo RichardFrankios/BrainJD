@@ -52,8 +52,10 @@ public class NetWorkUtil {
             if (conn.getResponseCode() == 200) {
                 InputStream is = conn.getInputStream();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                Log.d(TAG, "doPost: 200");
                 return reader.readLine();
             }
+            Log.d(TAG, "doPost: " + conn.getResponseCode());
 
         } catch (Exception e) {
             e.printStackTrace();

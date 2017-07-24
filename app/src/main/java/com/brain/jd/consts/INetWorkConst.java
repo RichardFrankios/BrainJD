@@ -44,4 +44,8 @@ public interface INetWorkConst {
      * brand category url
      */
     public static final String BRAND_CATEGORY_URL = BASE_URL + "/brand";
+    /**
+     * search product
+     */
+    public static final String SEARCH_PRODUCT_URL = BASE_URL + "/searchProduct";
 }

@@ -46,7 +46,8 @@ public class SubCategoryView extends FlexScrollView implements IViewContainer, I
     /**
      * intent extra data flag
      */
-    public static final String INTENT_EXTRA_DATA_CATEGORY_ID = "category_id";
+    public static final String INTENT_EXTRA_DATA_TOP_CATEGORY_ID = "top_category_id";
+    public static final String INTENT_EXTRA_DATA_THIRD_CATEGORY_ID = "third_category_id";
 
     @ViewInject(R.id.child_container_ll)
     private LinearLayout mLlChildContainer;
@@ -92,7 +93,8 @@ public class SubCategoryView extends FlexScrollView implements IViewContainer, I
 
 
                     Intent intent = new Intent(getContext(), ProductListActivity.class);
-                    intent.putExtra(INTENT_EXTRA_DATA_CATEGORY_ID, mRTopCategoryBean.getId());
+                    intent.putExtra(INTENT_EXTRA_DATA_TOP_CATEGORY_ID, mRTopCategoryBean.getId());
+                    intent.putExtra(INTENT_EXTRA_DATA_THIRD_CATEGORY_ID, mThirdCategory.get(parentId).get(position).getId());
                     getContext().startActivity(intent);
 
                 }

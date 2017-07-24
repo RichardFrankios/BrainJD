@@ -77,6 +77,16 @@ public interface IdiyMessage {
     public static final int MSG_ACTION_BRAND_CATEGORY_RESULT = 22;
 
 
+    /**
+     * search product
+     */
+    public static final int MSG_ACTION_SEARCH_PRODUCT        = 23;
+    public static final int MSG_ACTION_SEARCH_PRODUCT_RESULT = 24;
+
+
+
+
+
 
 
 
